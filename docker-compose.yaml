@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  amazon_db:
+    image: shandytp/amazon-sales-data-docker-db:latest
+    container_name: amazon_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${SOURCE_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${SOURCE_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${SOURCE_POSTGRES_DB}
+    ports:
+      - "5432:5432"  
+    volumes:
+      - amazon_db_data:/var/lib/postgresql/data  
+
+  etl_db:
+    image: postgres:13
+    container_name: etl_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${ETL_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${ETL_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${ETL_POSTGRES_DB}
+    ports:
+      - "5433:5432"  
+    volumes:
+      - etl_db_data:/var/lib/postgresql/data  
+      - ./init-scripts:/docker-entrypoint-initdb.d  
+
+volumes:
+  amazon_db_data:
+  etl_db_data:

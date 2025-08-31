@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 class Transform:
@@ -57,13 +58,14 @@ class Transform:
 
     def drop_null_data(self, df):
         # Drop baris yang memiliki nilai NaN di semua kolom
-        df_clean = df.dropna().reset_index(drop=True)
-        return df_clean
+        df = df.dropna()
+        return df
+
 
     def drop_duplicate(self, df):
         # Drop baris yang duplikat
-        df_clean = df.drop_duplicates().reset_index(drop=True)
-        return df_clean
+        df.drop_duplicates(inplace=True)
+    
     def rename_col(self,df,col_format):
         df = df.rename(columns=col_format)
         return df
@@ -72,6 +74,16 @@ class Transform:
         string = str(price)
         float_data = string.replace('Â£','')
         return float_data
+    
+    def replace_row_sales(self, price):
+        string = str(price)
+        try:
+            float_data = string.replace('₹', '').replace(',', '').replace(' ', '')
+            float_data = float(float_data)
+            return float_data
+        except ValueError:  
+            return 0.0  
+
     
     def rating_to_int(self,col):
         if col == 'One':

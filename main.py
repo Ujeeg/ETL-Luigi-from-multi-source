@@ -1,133 +1,257 @@
+import luigi
+from dotenv import load_dotenv
+import os
+import pandas as pd
+
 from ETL.extract.extract import Extract
 from ETL.transform.transform import Transform
+from ETL.load.load import Load
+
+load_dotenv()
 
 extract_class = Extract()
-Transform_class = Transform()
+transform_class = Transform()
+load_class = Load()
 
-# scrapping
+# Env variables
+username_sales = os.getenv('SOURCE_POSTGRES_USER')
+password_sales = os.getenv('SOURCE_POSTGRES_PASSWORD')
+host_sales = os.getenv('SOURCE_POSTGRES_HOST')
+port_sales = os.getenv('SOURCE_POSTGRES_PORT',)
+db_sales = os.getenv('SOURCE_POSTGRES_DB')
 
-BASE_TEMPLATE = "https://books.toscrape.com/catalogue/page-{}.html"
-BASE_SITE = "https://books.toscrape.com/catalogue/"
-BASE_IMAGE = "https://books.toscrape.com/"
-data_book_scrap = extract_class.scrap_book_data(50,BASE_TEMPLATE,BASE_SITE,BASE_IMAGE)
+# Marketing file
+path_file_sales = os.getenv('PATH_MARKETING')
 
-print(data_book_scrap)
+# DB URL
+url_source_database_sales = f'postgresql://{username_sales}:{password_sales}@{host_sales}:{port_sales}/{db_sales}'
 
-# extract database
-
-url = 'postgresql://postgres:password123@localhost:5432/etl_db'
-print(extract_class.connection_to_database(url,'amazon_sales_data'))
-df_sales = extract_class.connection_to_database(url,'amazon_sales_data')
-
-# extract csv
-path_file = 'Data_source/ElectronicsProductsPricingData.csv'
-print(extract_class.extract_data_csv(path_file))
-df_marketing = extract_class.extract_data_csv(path_file)
+# DB BOOK
+path_file_book = os.getenv('PATH_BOOKS')
 
 
-
-# Transform data
-
-print('Check Data Null ====================================================================================================')
-
-#check null data
-print(Transform_class.check_null(df_marketing)) # check null data
-df_marketing_null = Transform_class.check_null(df_marketing)
-print(Transform_class.check_null(df_sales)) # check null data sales
-
-print('Check Data Duplicate ====================================================================================================')
-
-#check duplicate data
-print(Transform_class.check_duplicated(df_marketing)) # check duplicated data
-print(Transform_class.check_duplicated(df_sales)) # check duplicated data sales
-
-print('Transform Marketing data ====================================================================================================')
-#transform data marketing
-
-# get colums has null higher than 60%
-null_columns = Transform_class.get_colums_null_list(df_marketing_null)
-# drop columns null higher than 60%
-df_dropped_null = Transform_class.drop_columns_null(df_marketing, null_columns)
-print(f'Columns {null_columns} has been dropped')
-
-#Start Transform marketing data
-df_dropped_null['prices.shipping'] = df_dropped_null.apply(
-    Transform_class.fill_shipping,
-    axis=1,
-    args=('prices.shipping', 'prices.amountMin')  
-)
-
-print("start transform Price_shipping---------------------------------------------------------")
-
-df_dropped_null['manufacturer'] = df_dropped_null.apply(Transform_class.fill_null, axis=1)
-
-print("start transform manufacturer------------------------------------------------------------")
-
-df_dropped_null['shipping_cost'] = df_dropped_null['prices.shipping'].apply(Transform_class.create_shipping_to_float)
-
-print("start create shipping_cost----------------------------------------------------------------")
-
-df_marketing_clean = Transform_class.drop_null_data(df_dropped_null)
-
-#rename columns
-cols_new = {
-    'prices.amountMax': 'prices_amount_max',
-    'prices.amountMin': 'prices_amount_min',
-    'prices.availability': 'prices_availability',
-    'prices.condition': 'prices_condition',
-    'prices.currency': 'prices_currency',
-    'prices.dateSeen': 'prices_date_seen',
-    'prices.isSale': 'prices_is_sale',
-    'prices.merchant': 'prices_merchant',
-    'prices.shipping': 'prices_shipping',
-    'prices.sourceURLs': 'prices_source_urls',
-    'manufacturerNumber': 'manufacturer_number',
-    'primaryCategories': 'primary_categories',
-    'imageURLs': 'image_urls',
-    'sourceURLs': 'source_urls',
-    'shipping_cost': 'shipping_cost'
-}
-df_marketing_clean = Transform_class.rename_col(df_marketing_clean,cols_new)
-
-# check duplicate and null
-print(Transform_class.check_duplicated(df_marketing_clean))
-print(Transform_class.check_null(df_marketing_clean))
-
-print('Transform Marketing data Finished ====================================================================================================')
-
-# Transform sales data
-print(df_sales)
-
-print("Transform data Duplicated=================================================================================================================")
-# check data duplicated
-jumlah_data = len(df_sales)
-nilai = Transform_class.check_duplicated(df_sales)
-print(nilai + f' dari {jumlah_data}')
-print(Transform_class.check_null(df_sales))
-
-# drop data null dibawah 1%
-df_drop_null = Transform_class.drop_null_data(df_sales)
-# drop duplicated data
-df_drop_duplicate = Transform_class.drop_duplicate(df_drop_null)
+df_sales = extract_class.connection_to_database(url_source_database_sales,'amazon_sales_data')
+df_marketing = extract_class.extract_data_csv(path_file_sales)
+df_books = extract_class.extract_data_csv(path_file_book)
 
 
-# check data duplicated and null
-print(Transform_class.check_duplicated(df_drop_duplicate))
-print(Transform_class.check_null(df_drop_duplicate))
+class ExtractData(luigi.Task):
+    def requires(self):
+        pass
+    
+    def run(self):
+        #extract data sales, marketing, boooks
+        
+        print('----------------------------------Start Extracting Data --------------------------------------------------------')
+        df_sales = extract_class.connection_to_database(url_source_database_sales,'amazon_sales_data')
+        df_marketing = extract_class.extract_data_csv(path_file_sales)
+        df_books = extract_class.extract_data_csv(path_file_book)
+        
+        #extract to csv
+        try:
+            df_sales.to_csv(self.output()['sales'].path, index=False)
+            print("✅ Data Sales Successfully Extracted")
+        except Exception as e:
+            print(f"❌ Error extracting sales data: {e}")
 
-df_sales_clean = df_drop_duplicate
+        try:
+            df_marketing.to_csv(self.output()['marketing'].path, index=False)
+            print("✅ Data Marketing Successfully Extracted")
+        except Exception as e:
+            print(f"❌ Error extracting marketing data: {e}")
+            
+        try:
+            df_books.to_csv(self.output()['books'].path, index=False)
+            print("✅ Data Books Successfully Extracted")
+        except Exception as e:
+            print(f"❌ Error extracting books data: {e}")
+    
+    def output(self): 
+        return { 'sales': luigi.LocalTarget("data/raw/extracted_sales.csv"), 
+                'marketing': luigi.LocalTarget("data/raw/extracted_marketing.csv"),
+                'books': luigi.LocalTarget("data/raw/extracted_books.csv")}
 
-# Transform data hasil scrap
-print(Transform_class.check_duplicated(data_book_scrap))
-print(Transform_class.check_null(data_book_scrap))
 
-# Transform price col
-data_book_scrap['price'] = data_book_scrap['price'].apply(Transform_class.replace_row).astype(float)
+class TransformData(luigi.Task):
+    def requires(self):
+        return ExtractData()
+    
+    def run(self):
+        input_files = self.input()
+        
+        # extracting data sales
+        print("--------------------------------Transforming data Sales-------------------------------------------")
+        df_sales = pd.read_csv(input_files['sales'].path)
+        # check data null on sales
+        print('-------------------------------Data Null on df_sales------------------------------------------')
+        print(transform_class.check_null(df_sales))
+        print()
+        # drop data null dibawah 1%
+        df_sales_drop = transform_class.drop_null_data(df_sales)
+        #drop unknow colums
+        df_sales_drop = transform_class.drop_columns_null(df_sales_drop, 'Unnamed: 0')
+        # change discount price to float
+        df_sales_drop['discount_price'] = df_sales_drop['discount_price'].apply(transform_class.replace_row_sales)
+        df_sales_drop['actual_price'] = df_sales_drop['actual_price'].apply(transform_class.replace_row_sales)
+        df_sales_drop['no_of_ratings'] = df_sales_drop['no_of_ratings'].apply(transform_class.replace_row_sales).astype(int)
+        df_sales_drop['ratings'] = df_sales_drop['ratings'].apply(transform_class.replace_row_sales).astype(int)
+        df_sales_clean = df_sales_drop
+        # check data null after Transform
+        print("================================================Check data Null After Transform=================================================================")
+        print(transform_class.check_null(df_sales_clean))
+        print()
+        print()
+        print()
+        
+        
+        # extracting data marketing --> need to fix
+        print("--------------------------------Transforming data Marketing-------------------------------------------")
+        df_sales = pd.read_csv(input_files['marketing'].path)
+        print('================================================Check Data Null =================================================================================')
+        #check null data
+        print(transform_class.check_null(df_marketing)) # check null data
+        df_marketing_null = transform_class.check_null(df_marketing)
 
-# Trasform rating col
-data_book_scrap['rating'] = data_book_scrap['rating'].apply(Transform_class.rating_to_int).astype(int)
+        print('Check Data Duplicate ====================================================================================================')
 
-print(data_book_scrap)
+        #check duplicate data
+        print(transform_class.check_duplicated(df_marketing)) # check duplicated data
+
+        print('Transform Marketing data ====================================================================================================')
+        #transform data marketing
+
+        # get colums has null higher than 60%
+        null_columns = transform_class.get_colums_null_list(df_marketing_null)
+        # drop columns null higher than 60%
+        df_dropped_null = transform_class.drop_columns_null(df_marketing, null_columns)
+        print(f'Columns {null_columns} has been dropped')
+
+        #Start Transform marketing data
+        df_dropped_null['prices.shipping'] = df_dropped_null.apply(
+            transform_class.fill_shipping,
+            axis=1,
+            args=('prices.shipping', 'prices.amountMin')  
+        )
+        print("start transform Price_shipping---------------------------------------------------------")
+
+        df_dropped_null['manufacturer'] = df_dropped_null.apply(transform_class.fill_null, axis=1)
+
+        print("start transform manufacturer------------------------------------------------------------")
+
+        df_dropped_null['shipping_cost'] = df_dropped_null['prices.shipping'].apply(transform_class.create_shipping_to_float)
+
+        print("start create shipping_cost----------------------------------------------------------------")
+
+        df_marketing_clean = transform_class.drop_null_data(df_dropped_null)
+
+        #rename columns
+        cols_new = {
+            'prices.amountMax': 'prices_amount_max',
+            'prices.amountMin': 'prices_amount_min',
+            'prices.availability': 'prices_availability',
+            'prices.condition': 'prices_condition',
+            'prices.currency': 'prices_currency',
+            'prices.dateSeen': 'prices_date_seen',
+            'prices.isSale': 'prices_is_sale',
+            'prices.merchant': 'prices_merchant',
+            'prices.shipping': 'prices_shipping',
+            'prices.sourceURLs': 'prices_source_urls',
+            'manufacturerNumber': 'manufacturer_number',
+            'primaryCategories': 'primary_categories',
+            'imageURLs': 'image_urls',
+            'sourceURLs': 'source_urls',
+            'shipping_cost': 'shipping_cost'
+        }
+        df_marketing_clean = transform_class.rename_col(df_marketing_clean,cols_new)
+        
+
+        # check duplicate and null
+        print(transform_class.check_duplicated(df_marketing_clean))
+        print(transform_class.check_null(df_marketing_clean))
+        print()
+        print()
+        print()
+        
+        
+        # extracting data books
+        print("--------------------------------Transforming data books-------------------------------------------")
+        data_book_scrap = pd.read_csv(input_files['books'].path)
+        
+        print(transform_class.check_duplicated(data_book_scrap))
+        print(transform_class.check_null(data_book_scrap))
+
+        # Transform price col
+        data_book_scrap['price'] = data_book_scrap['price'].apply(transform_class.replace_row).astype(float)
+
+        # Trasform rating col
+        data_book_scrap['rating'] = data_book_scrap['rating'].apply(transform_class.rating_to_int).astype(int)
+        
+        print('Transform data Finished ====================================================================================================')
+                
+                
+        #extract to csv
+        try:
+            df_sales_clean.to_csv(self.output()['sales'].path, index=False)
+            print("✅ Data Sales Successfully Extracted")
+        except Exception as e:
+            print(f"❌ Error extracting sales data: {e}")
+            
+        try:
+            df_marketing_clean.to_csv(self.output()['marketing'].path, index=False)
+            print("✅ Data Sales Successfully Extracted")
+        except Exception as e:
+            print(f"❌ Error extracting marketing data: {e}")
+            
+        try:
+            data_book_scrap.to_csv(self.output()['books'].path, index=False)
+            print("✅ Data Sales Successfully Extracted")
+        except Exception as e:
+            print(f"❌ Error extracting books data: {e}")
+            
+        
+        
+    def output(self): 
+        return { 'sales': luigi.LocalTarget("data/transform/extracted_sales.csv"),
+                'marketing': luigi.LocalTarget("data/transform/extracted_marketing.csv"),
+                'books': luigi.LocalTarget("data/transform/extracted_books.csv")}
+        
 
 
-# LOAD TO DATABASE
+class LoadData(luigi.Task):
+    def requires(self):
+        return TransformData()
+    
+    def run(self):
+        
+        # get data after trasform
+        input_files = self.input()  # ini adalah dictionary dari TransformData.output()
+        
+        # Ambil file hasil transform
+        df_sales = pd.read_csv(input_files['sales'].path)
+        df_marketing = pd.read_csv(input_files['marketing'].path)
+        df_books = pd.read_csv(input_files['books'].path)
+        
+        username = os.getenv('ETL_POSTGRES_USER')
+        password = os.getenv('ETL_POSTGRES_PASSWORD')
+        host = os.getenv('ETL_HOST')
+        port = os.getenv('ETL_PORT')
+        database = os.getenv('ETL_POSTGRES_DB')
+
+        conn = load_class.get_conn_from_database(username, password, host, port, database)
+
+        print(conn.connect())
+        
+        print('hasil load data sales :')
+        load_class.load_data_to_db(df_sales, "data_sales", conn)
+        print('hasil load data marketing :')
+        load_class.load_data_to_db(df_marketing, "data_marketing", conn)
+        print('hasil load data books :')
+        load_class.load_data_to_db(df_books, "data_book", conn)
+
+            
+    
+    def output(self):
+        return luigi.LocalTarget("data/load/load_completed.txt")
+        
+if __name__ == "__main__":
+    luigi.build([LoadData()], local_scheduler=True)
