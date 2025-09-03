@@ -100,12 +100,9 @@ class Extract:
             df = connection_to_database(db_url, table_name)
         """
         query = f"SELECT * FROM {table}"
-        try:
-            conn = create_engine(url)
-            df = pd.read_sql(query, conn)
-            return df
-        except:
-            return "error_connection"
+        conn = create_engine(url)
+        df = pd.read_sql(query, conn)
+        return df
 
 
     def extract_data_csv(self, file_path):
@@ -130,8 +127,5 @@ class Extract:
         else:
             print(df.head())
     """
-        try:
-            df = pd.read_csv(file_path)
-        except ValueError:
-            df = "data Error"
+        df = pd.read_csv(file_path)
         return df
