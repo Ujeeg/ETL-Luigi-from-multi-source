@@ -1,9 +1,9 @@
 from dotenv import load_dotenv
 import os
 load_dotenv()
-from ETL.extract.extract import Extract
-from ETL.transform.transform import Transform
-from ETL.load.load import Load
+from services.extract.extract import Extract
+from services.transform.transform import Transform
+from services.load.load import Load
 extract_class = Extract()
 transfrom_class = Transform()
 load_class = Load()

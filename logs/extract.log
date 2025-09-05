@@ -1,0 +1,102 @@
+2025-09-04 00:05:51,077 - luigi - INFO - logging configured by default settings
+2025-09-04 00:05:51,080 - luigi-interface - DEBUG - Checking if ExtractSales() is complete
+2025-09-04 00:05:51,081 - luigi-interface - INFO - Informed scheduler that task   ExtractSales__99914b932b   has status   PENDING
+2025-09-04 00:05:51,081 - luigi-interface - INFO - Done scheduling tasks
+2025-09-04 00:05:51,081 - luigi-interface - INFO - Running Worker with 1 processes
+2025-09-04 00:05:51,081 - luigi-interface - DEBUG - Asking scheduler for work...
+2025-09-04 00:05:51,081 - luigi.scheduler - DEBUG - Starting pruning of task graph
+2025-09-04 00:05:51,081 - luigi.scheduler - DEBUG - Done pruning task graph
+2025-09-04 00:05:51,081 - luigi-interface - DEBUG - Pending tasks: 1
+2025-09-04 00:05:51,081 - luigi-interface - INFO - [pid 14154] Worker Worker(salt=9037620809, workers=1, host=ujeeeg-B450-Steel-Legend, username=ujeeeg, pid=14154) running   ExtractSales()
+2025-09-04 00:05:51,082 - root - DEBUG - ▶ Starting extraction for Sales data
+2025-09-04 00:05:51,506 - root - INFO - ✅ Sales data successfully extracted
+2025-09-04 00:05:51,506 - root - DEBUG - 💾 Saving Sales data to CSV
+2025-09-04 00:05:52,078 - root - INFO - ✅ Sales data successfully saved to CSV
+2025-09-04 00:05:52,108 - luigi-interface - INFO - [pid 14154] Worker Worker(salt=9037620809, workers=1, host=ujeeeg-B450-Steel-Legend, username=ujeeeg, pid=14154) done      ExtractSales()
+2025-09-04 00:05:52,108 - luigi-interface - DEBUG - 1 running tasks, waiting for next task to finish
+2025-09-04 00:05:52,109 - luigi-interface - INFO - Informed scheduler that task   ExtractSales__99914b932b   has status   DONE
+2025-09-04 00:05:52,109 - luigi-interface - DEBUG - Asking scheduler for work...
+2025-09-04 00:05:52,109 - luigi.scheduler - DEBUG - Starting pruning of task graph
+2025-09-04 00:05:52,109 - luigi.scheduler - DEBUG - Done pruning task graph
+2025-09-04 00:05:52,109 - luigi-interface - DEBUG - Done
+2025-09-04 00:05:52,109 - luigi-interface - DEBUG - There are no more tasks to run at this time
+2025-09-04 00:05:52,109 - luigi-interface - INFO - Worker Worker(salt=9037620809, workers=1, host=ujeeeg-B450-Steel-Legend, username=ujeeeg, pid=14154) was stopped. Shutting down Keep-Alive thread
+2025-09-04 00:05:52,110 - luigi-interface - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 1 tasks of which:
+* 1 ran successfully:
+    - 1 ExtractSales()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
+2025-09-04 00:05:52,110 - luigi - INFO - logging already configured
+2025-09-04 00:05:52,111 - luigi-interface - DEBUG - Checking if ExtractMarketing() is complete
+2025-09-04 00:05:52,112 - luigi-interface - INFO - Informed scheduler that task   ExtractMarketing__99914b932b   has status   PENDING
+2025-09-04 00:05:52,112 - luigi-interface - INFO - Done scheduling tasks
+2025-09-04 00:05:52,112 - luigi-interface - INFO - Running Worker with 1 processes
+2025-09-04 00:05:52,112 - luigi-interface - DEBUG - Asking scheduler for work...
+2025-09-04 00:05:52,112 - luigi.scheduler - DEBUG - Starting pruning of task graph
+2025-09-04 00:05:52,112 - luigi.scheduler - DEBUG - Done pruning task graph
+2025-09-04 00:05:52,112 - luigi-interface - DEBUG - Pending tasks: 1
+2025-09-04 00:05:52,112 - luigi-interface - INFO - [pid 14154] Worker Worker(salt=3198508050, workers=1, host=ujeeeg-B450-Steel-Legend, username=ujeeeg, pid=14154) running   ExtractMarketing()
+2025-09-04 00:05:52,112 - root - DEBUG - ▶ Starting extraction for Marketing data
+2025-09-04 00:05:52,451 - root - INFO - ✅ Marketing data successfully extracted
+2025-09-04 00:05:52,451 - root - DEBUG - 💾 Saving Marketing data to CSV
+2025-09-04 00:05:53,322 - root - INFO - ✅ Marketing data successfully saved to CSV
+2025-09-04 00:05:53,323 - luigi-interface - INFO - [pid 14154] Worker Worker(salt=3198508050, workers=1, host=ujeeeg-B450-Steel-Legend, username=ujeeeg, pid=14154) done      ExtractMarketing()
+2025-09-04 00:05:53,323 - luigi-interface - DEBUG - 1 running tasks, waiting for next task to finish
+2025-09-04 00:05:53,324 - luigi-interface - INFO - Informed scheduler that task   ExtractMarketing__99914b932b   has status   DONE
+2025-09-04 00:05:53,324 - luigi-interface - DEBUG - Asking scheduler for work...
+2025-09-04 00:05:53,324 - luigi.scheduler - DEBUG - Starting pruning of task graph
+2025-09-04 00:05:53,324 - luigi.scheduler - DEBUG - Done pruning task graph
+2025-09-04 00:05:53,324 - luigi-interface - DEBUG - Done
+2025-09-04 00:05:53,324 - luigi-interface - DEBUG - There are no more tasks to run at this time
+2025-09-04 00:05:53,324 - luigi-interface - INFO - Worker Worker(salt=3198508050, workers=1, host=ujeeeg-B450-Steel-Legend, username=ujeeeg, pid=14154) was stopped. Shutting down Keep-Alive thread
+2025-09-04 00:05:53,325 - luigi-interface - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 1 tasks of which:
+* 1 ran successfully:
+    - 1 ExtractMarketing()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
+2025-09-04 00:05:53,325 - luigi - INFO - logging already configured
+2025-09-04 00:05:53,326 - luigi-interface - DEBUG - Checking if ExtractBooks() is complete
+2025-09-04 00:05:53,327 - luigi-interface - INFO - Informed scheduler that task   ExtractBooks__99914b932b   has status   PENDING
+2025-09-04 00:05:53,327 - luigi-interface - INFO - Done scheduling tasks
+2025-09-04 00:05:53,327 - luigi-interface - INFO - Running Worker with 1 processes
+2025-09-04 00:05:53,327 - luigi-interface - DEBUG - Asking scheduler for work...
+2025-09-04 00:05:53,327 - luigi.scheduler - DEBUG - Starting pruning of task graph
+2025-09-04 00:05:53,327 - luigi.scheduler - DEBUG - Done pruning task graph
+2025-09-04 00:05:53,328 - luigi-interface - DEBUG - Pending tasks: 1
+2025-09-04 00:05:53,328 - luigi-interface - INFO - [pid 14154] Worker Worker(salt=1055979854, workers=1, host=ujeeeg-B450-Steel-Legend, username=ujeeeg, pid=14154) running   ExtractBooks()
+2025-09-04 00:05:53,328 - root - DEBUG - ▶ Starting extraction for Books data
+2025-09-04 00:05:53,332 - root - INFO - ✅ Books data successfully extracted
+2025-09-04 00:05:53,332 - root - DEBUG - 💾 Saving Books data to CSV
+2025-09-04 00:05:53,336 - root - INFO - ✅ Books data successfully saved to CSV
+2025-09-04 00:05:53,336 - luigi-interface - INFO - [pid 14154] Worker Worker(salt=1055979854, workers=1, host=ujeeeg-B450-Steel-Legend, username=ujeeeg, pid=14154) done      ExtractBooks()
+2025-09-04 00:05:53,337 - luigi-interface - DEBUG - 1 running tasks, waiting for next task to finish
+2025-09-04 00:05:53,337 - luigi-interface - INFO - Informed scheduler that task   ExtractBooks__99914b932b   has status   DONE
+2025-09-04 00:05:53,337 - luigi-interface - DEBUG - Asking scheduler for work...
+2025-09-04 00:05:53,337 - luigi.scheduler - DEBUG - Starting pruning of task graph
+2025-09-04 00:05:53,337 - luigi.scheduler - DEBUG - Done pruning task graph
+2025-09-04 00:05:53,337 - luigi-interface - DEBUG - Done
+2025-09-04 00:05:53,337 - luigi-interface - DEBUG - There are no more tasks to run at this time
+2025-09-04 00:05:53,337 - luigi-interface - INFO - Worker Worker(salt=1055979854, workers=1, host=ujeeeg-B450-Steel-Legend, username=ujeeeg, pid=14154) was stopped. Shutting down Keep-Alive thread
+2025-09-04 00:05:53,338 - luigi-interface - INFO - 
+===== Luigi Execution Summary =====
+
+Scheduled 1 tasks of which:
+* 1 ran successfully:
+    - 1 ExtractBooks()
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
