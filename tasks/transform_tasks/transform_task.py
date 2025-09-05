@@ -1,4 +1,4 @@
-from extract_tasks.extract_task import ExtractBooks, ExtractMarketing, ExtractSales
+from tasks.extract_tasks.extract_task import ExtractBooks, ExtractMarketing, ExtractSales
 from services.transform.transform import Transform
 import luigi
 import pandas as pd
@@ -13,7 +13,7 @@ logging.basicConfig(
     level=logging.DEBUG,  
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("logs/extract.log", mode="a"),  
+        logging.FileHandler("logs/transform.log", mode="a"),  
         logging.StreamHandler()  
     ]
 )
@@ -104,7 +104,6 @@ class TransformDataMarketng(luigi.Task):
         
         # extracting data marketing --> need to fix
         logger.debug("Transforming data Marketing")
-        
         logger.debug('Read data to dataframe')
         
         try:
@@ -120,7 +119,7 @@ class TransformDataMarketng(luigi.Task):
         # check data null
         logger.debug('Check Data Null')
         try:
-            logger.info(transform_class.check_null(df_marketing)) # check null data
+            logger.info(transform_class.check_null(df_marketing))
             df_marketing_null = transform_class.check_null(df_marketing)
         except ValueError:
             logger.warning('Value Error')
@@ -136,6 +135,7 @@ class TransformDataMarketng(luigi.Task):
         except Exception:
             logger.error('Error')
             
+
         #transform data marketin
         logger.debug('Get higher null data columns then 60%')
         # get higher than 60%
@@ -159,6 +159,7 @@ class TransformDataMarketng(luigi.Task):
                 axis=1,
                 args=('prices.shipping', 'prices.amountMin')  
             )
+            logger.info('price.shipping berhasil di transform')
         except ValueError:
             logger.warning()
         except Exception:
@@ -168,6 +169,7 @@ class TransformDataMarketng(luigi.Task):
         logger.debug("Start handling data Null on Manufacture")
         try:
             df_dropped_null['manufacturer'] = df_dropped_null.apply(transform_class.fill_null, axis=1)
+            logger.info('Data Manufacture berhasil di transform')
         except ValueError:
             logger.warning()
         except Exception:
@@ -176,6 +178,7 @@ class TransformDataMarketng(luigi.Task):
         logger.debug("Start handling data on shipping_cost")
         try:
             df_dropped_null['shipping_cost'] = df_dropped_null['prices.shipping'].apply(transform_class.create_shipping_to_float)
+            logger.info('Data shipping_cost berhasil di buat')
         except ValueError:
             logger.warning()
         except Exception:
@@ -192,8 +195,13 @@ class TransformDataMarketng(luigi.Task):
             logger.error()
                 
                 
+        try:
+            df_marketing_clean = transform_class.drop_null_data(df_dropped_null)
+        except ValueError:
+            logger.warning('')
+        except Exception:
+            logger.error()
 
-        df_marketing_clean = transform_class.drop_null_data(df_dropped_null)
 
         #rename columns
         cols_new = {
@@ -213,44 +221,84 @@ class TransformDataMarketng(luigi.Task):
             'sourceURLs': 'source_urls',
             'shipping_cost': 'shipping_cost'
         }
-        df_marketing_clean = transform_class.rename_col(df_marketing_clean,cols_new)
-        
+
+        try:
+            df_marketing_clean = transform_class.rename_col(df_marketing_clean,cols_new)
+            logger.info('Data date berhasil di transform')
+        except ValueError:
+            logger.warning()
+        except Exception:
+            logger.error()
 
         # check duplicate and null
-        print(transform_class.check_duplicated(df_marketing_clean))
-        print(transform_class.check_null(df_marketing_clean))
-        print()
-        print()
-        print()
-        
-        
-        # extracting data books
-        print("--------------------------------Transforming data books-------------------------------------------")
-        data_book_scrap = pd.read_csv(input_files['books'].path)
-        
-        print(transform_class.check_duplicated(data_book_scrap))
-        print(transform_class.check_null(data_book_scrap))
-
-        # Transform price col
-        data_book_scrap['price'] = data_book_scrap['price'].apply(transform_class.replace_row).astype(float)
-
-        # Trasform rating col
-        data_book_scrap['rating'] = data_book_scrap['rating'].apply(transform_class.rating_to_int).astype(int)
-        
-        print('Transform data Finished ====================================================================================================')
-                
-                
-        #extract to csv
-        
-            
+        logger.info(transform_class.check_duplicated(df_marketing_clean))
+        logger.info(transform_class.check_null(df_marketing_clean))
+             
         try:
             df_marketing_clean.to_csv(self.output()['marketing'].path, index=False)
-            print("✅ Data Sales Successfully Extracted")
+            logger.info("✅ Data Marketing Successfully Extracted")
+        except ValueError:
+            logger.warning('nama')
         except Exception as e:
-            print(f"❌ Error extracting marketing data: {e}")
+            logger.error(f"❌ Error extracting marketing data: {e}")
     
+    def output(self):
+        return { 'marketing': luigi.LocalTarget("data/transform/extracted_marketing.csv") }
 
 class TransformDataBooks(luigi.Task):
     def requires(self):
         return ExtractBooks()
     
+    def run(self):
+        input_files = self.input()
+        # extracting data books
+        
+        logger.debug("Transform Data Books")
+        logger.debug("Read Data books ke dataframe")
+
+        try:
+            data_book_scrap = pd.read_csv(input_files['books'].path)
+        except ValueError:
+            logger.warning()
+        except Exception:
+            logger.error()
+
+        
+        logger.info(transform_class.check_duplicated(data_book_scrap))
+        logger.info(transform_class.check_null(data_book_scrap))
+
+        # Transform price col
+        logger.debug('Tranform price to float')
+        try:
+            data_book_scrap['price'] = data_book_scrap['price'].apply(transform_class.replace_row).astype(float)
+        except ValueError:
+            logger.warning()
+        except Exception:
+            logger.error()
+
+        # Trasform rating col
+        logger.debug('Transform rationg to int')
+        try:
+            data_book_scrap['rating'] = data_book_scrap['rating'].apply(transform_class.rating_to_int).astype(int)
+        except ValueError:
+            logger.warning()
+        except Exception:
+            logger.error()                
+
+        #extract to csv
+        try:
+            data_book_scrap.to_csv(self.output()['books'].path, index=False)
+            logger.info("✅ Data books Successfully Extracted")
+        except ValueError:
+            logger.warning('nama')
+        except Exception as e:
+            logger.error(f"❌ Error extracting marketing data: {e}")
+    
+    def output(self):
+        return {'books': luigi.LocalTarget("data/transform/extracted_books.csv")}
+
+
+
+    
+    
+       
