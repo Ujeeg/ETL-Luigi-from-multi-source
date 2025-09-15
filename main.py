@@ -2,14 +2,26 @@ import luigi
 import logging
 
 # Import task yang sudah kamu buat
-from tasks.transform_tasks.transform_task import TransformDataSales, TransformDataMarketng, TransformDataBooks
+from tasks.load_task.load_task import (
+    LoadDataSales,
+    LoadDataMarketing,
+    LoadDataBooks
+)
 
 if __name__ == "__main__":
     # Setup logging biar kelihatan jelas di terminal
-    print("=== Test Luigi Extract Tasks ===")
+    logging.basicConfig(level=logging.INFO)
+    print("=== Mulai menjalankan semua pipeline ETL (Sales, Marketing, Books) ===")
 
-    # Jalankan task ExtractSales
-    print("\n▶️ Menjalankan ExtractSales...")
-    luigi.build([TransformDataSales()], local_scheduler=True)
+    # Jalankan semua task Load (otomatis akan jalan Extract + Transform lebih dulu)
+    luigi.build(
+        [
+            LoadDataSales(),
+            LoadDataMarketing(),
+            LoadDataBooks()
+        ],
+        local_scheduler=True,
+        workers=3  # bisa paralel 3 worker
+    )
 
-    print("\n✅ Selesai test semua task.")
+    print("\n✅ Semua task ETL selesai dijalankan.")

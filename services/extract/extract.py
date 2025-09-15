@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from sqlalchemy import create_engine
 
+
 class Extract:
 
 # scrapping function from web
