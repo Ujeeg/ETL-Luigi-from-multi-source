@@ -1,36 +1,19 @@
-2025-09-15 19:09:10,956 - Transform - DEBUG - 📂 Membaca data Sales ke DataFrame
-2025-09-15 19:09:11,370 - Transform - INFO - ✅ File Sales CSV berhasil dibaca
-2025-09-15 19:09:11,370 - Transform - DEBUG - 🔍 Mengecek nilai null pada df_sales
-2025-09-15 19:09:11,401 - Transform - INFO -               col  missing_val  missing_value_percentage
-5         ratings        32227                     31.94
-6   no_of_ratings        32227                     31.94
-7  discount_price        11166                     11.07
-8    actual_price         3221                      3.19
-9      Unnamed: 0        50418                     49.97
-2025-09-15 19:09:11,410 - Transform - DEBUG - 🗑️ Menghapus data null < 1% dari df_sales
-2025-09-15 19:09:11,443 - Transform - DEBUG - 🗑️ Menghapus kolom 'Unnamed: 0'
-2025-09-15 19:09:11,450 - Transform - DEBUG - 🔄 Transform kolom discount_price, actual_price, no_of_ratings, ratings
-2025-09-15 19:09:11,515 - Transform - DEBUG - 🔍 Cek kembali data null setelah transform
-2025-09-15 19:09:11,526 - Transform - INFO - Empty DataFrame
+2025-09-23 18:13:40,884 - Transform - DEBUG - 📂 Membaca data Books ke DataFrame
+2025-09-23 18:13:40,904 - Transform - INFO - ✅ File Books CSV berhasil dibaca
+2025-09-23 18:13:40,905 - Transform - DEBUG - 🔍 Mengecek data duplicate & null
+2025-09-23 18:13:40,910 - Transform - INFO - total data duplicate 0
+2025-09-23 18:13:40,917 - Transform - INFO - Empty DataFrame
 Columns: [col, missing_val, missing_value_percentage]
 Index: []
-2025-09-15 19:09:11,732 - Transform - INFO - ✅ Data Sales berhasil ditransformasi & disimpan
-2025-09-15 19:23:10,241 - Transform - DEBUG - 📂 Membaca data Books ke DataFrame
-2025-09-15 19:23:10,247 - Transform - INFO - ✅ File Books CSV berhasil dibaca
-2025-09-15 19:23:10,247 - Transform - DEBUG - 🔍 Mengecek data duplicate & null
-2025-09-15 19:23:10,250 - Transform - INFO - total data duplicate 0
-2025-09-15 19:23:10,252 - Transform - INFO - Empty DataFrame
-Columns: [col, missing_val, missing_value_percentage]
-Index: []
-2025-09-15 19:23:10,254 - Transform - DEBUG - 🔄 Transform kolom price ke float
-2025-09-15 19:23:10,256 - Transform - INFO - ✅ Kolom price berhasil ditransformasi
-2025-09-15 19:23:10,256 - Transform - DEBUG - 🔄 Transform kolom rating ke int
-2025-09-15 19:23:10,257 - Transform - INFO - ✅ Kolom rating berhasil ditransformasi
-2025-09-15 19:23:10,263 - Transform - INFO - ✅ Data Books berhasil ditransformasi & disimpan
-2025-09-15 19:23:11,747 - Transform - DEBUG - 📂 Membaca data Marketing ke DataFrame
-2025-09-15 19:23:12,070 - Transform - INFO - ✅ File Marketing CSV berhasil dibaca
-2025-09-15 19:23:12,071 - Transform - DEBUG - 🔍 Validasi data Marketing (null & duplicate)
-2025-09-15 19:23:12,078 - Transform - INFO -                 col  missing_val  missing_value_percentage
+2025-09-23 18:13:40,921 - Transform - DEBUG - 🔄 Transform kolom price ke float
+2025-09-23 18:13:40,923 - Transform - INFO - ✅ Kolom price berhasil ditransformasi
+2025-09-23 18:13:40,924 - Transform - DEBUG - 🔄 Transform kolom rating ke int
+2025-09-23 18:13:40,925 - Transform - INFO - ✅ Kolom rating berhasil ditransformasi
+2025-09-23 18:13:40,938 - Transform - INFO - ✅ Data Books berhasil ditransformasi & disimpan
+2025-09-23 18:13:43,610 - Transform - DEBUG - 📂 Membaca data Marketing ke DataFrame
+2025-09-23 18:13:44,267 - Transform - INFO - ✅ File Marketing CSV berhasil dibaca
+2025-09-23 18:13:44,268 - Transform - DEBUG - 🔍 Validasi data Marketing (null & duplicate)
+2025-09-23 18:13:44,282 - Transform - INFO -                 col  missing_val  missing_value_percentage
 9   prices.shipping         2972                     41.00
 16              ean         5706                     78.71
 19     manufacturer         4014                     55.37
@@ -39,99 +22,39 @@ Index: []
 28      Unnamed: 28         7243                     99.92
 29      Unnamed: 29         7237                     99.83
 30      Unnamed: 30         7243                     99.92
-2025-09-15 19:23:12,209 - Transform - INFO - total data duplicate 0
-2025-09-15 19:23:12,209 - Transform - DEBUG - 📊 Mendapatkan kolom dengan null > 60%
-2025-09-15 19:23:12,211 - Transform - INFO - 🗑️ Kolom ['ean', 'Unnamed: 26', 'Unnamed: 27', 'Unnamed: 28', 'Unnamed: 29', 'Unnamed: 30'] berhasil dihapus
-2025-09-15 19:23:12,211 - Transform - DEBUG - 🛠️ Transform kolom prices.shipping
-2025-09-15 19:23:12,263 - Transform - INFO - ✅ prices.shipping berhasil ditransformasi
-2025-09-15 19:23:12,263 - Transform - DEBUG - 🛠️ Isi kolom manufacturer
-2025-09-15 19:23:12,304 - Transform - INFO - ✅ manufacturer berhasil ditransformasi
-2025-09-15 19:23:12,304 - Transform - DEBUG - 🛠️ Buat kolom shipping_cost (float)
-2025-09-15 19:23:12,306 - Transform - INFO - ✅ shipping_cost berhasil dibuat
-2025-09-15 19:23:12,306 - Transform - DEBUG - 🗓️ Konversi kolom dateAdded & dateUpdated ke datetime
-2025-09-15 19:23:12,352 - Transform - INFO - ✅ dateAdded & dateUpdated berhasil dikonversi
-2025-09-15 19:23:12,352 - Transform - DEBUG - 🧹 Menghapus sisa data null
-2025-09-15 19:23:12,360 - Transform - DEBUG - 🏷️ Rename kolom Marketing
-2025-09-15 19:23:12,366 - Transform - INFO - ✅ Kolom Marketing berhasil di-rename
-2025-09-15 19:23:12,445 - Transform - INFO - total data duplicate 0
-2025-09-15 19:23:12,454 - Transform - INFO - Empty DataFrame
+2025-09-23 18:13:44,467 - Transform - INFO - total data duplicate 0
+2025-09-23 18:13:44,467 - Transform - DEBUG - 📊 Mendapatkan kolom dengan null > 60%
+2025-09-23 18:13:44,472 - Transform - INFO - 🗑️ Kolom ['ean', 'Unnamed: 26', 'Unnamed: 27', 'Unnamed: 28', 'Unnamed: 29', 'Unnamed: 30'] berhasil dihapus
+2025-09-23 18:13:44,472 - Transform - DEBUG - 🛠️ Transform kolom prices.shipping
+2025-09-23 18:13:44,556 - Transform - INFO - ✅ prices.shipping berhasil ditransformasi
+2025-09-23 18:13:44,557 - Transform - DEBUG - 🛠️ Isi kolom manufacturer
+2025-09-23 18:13:44,626 - Transform - INFO - ✅ manufacturer berhasil ditransformasi
+2025-09-23 18:13:44,626 - Transform - DEBUG - 🛠️ Buat kolom shipping_cost (float)
+2025-09-23 18:13:44,629 - Transform - INFO - ✅ shipping_cost berhasil dibuat
+2025-09-23 18:13:44,629 - Transform - DEBUG - 🗓️ Konversi kolom dateAdded & dateUpdated ke datetime
+2025-09-23 18:13:44,648 - Transform - INFO - ✅ dateAdded & dateUpdated berhasil dikonversi
+2025-09-23 18:13:44,649 - Transform - DEBUG - 🧹 Menghapus sisa data null
+2025-09-23 18:13:44,661 - Transform - DEBUG - 🏷️ Rename kolom Marketing
+2025-09-23 18:13:44,667 - Transform - INFO - ✅ Kolom Marketing berhasil di-rename
+2025-09-23 18:13:44,812 - Transform - INFO - total data duplicate 0
+2025-09-23 18:13:44,823 - Transform - INFO - Empty DataFrame
 Columns: [col, missing_val, missing_value_percentage]
 Index: []
-2025-09-15 19:23:13,367 - Transform - INFO - ✅ Data Marketing berhasil ditransformasi & disimpan
-2025-09-15 19:23:14,553 - Transform - DEBUG - 📂 Membaca data Sales ke DataFrame
-2025-09-15 19:23:15,011 - Transform - INFO - ✅ File Sales CSV berhasil dibaca
-2025-09-15 19:23:15,012 - Transform - DEBUG - 🔍 Mengecek nilai null pada df_sales
-2025-09-15 19:23:15,045 - Transform - INFO -               col  missing_val  missing_value_percentage
+2025-09-23 18:13:46,668 - Transform - INFO - ✅ Data Marketing berhasil ditransformasi & disimpan
+2025-09-23 18:14:51,085 - Transform - DEBUG - 📂 Membaca data Sales ke DataFrame
+2025-09-23 18:14:51,842 - Transform - INFO - ✅ File Sales CSV berhasil dibaca
+2025-09-23 18:14:51,842 - Transform - DEBUG - 🔍 Mengecek nilai null pada df_sales
+2025-09-23 18:14:51,896 - Transform - INFO -               col  missing_val  missing_value_percentage
 5         ratings        32227                     31.94
 6   no_of_ratings        32227                     31.94
 7  discount_price        11166                     11.07
 8    actual_price         3221                      3.19
 9      Unnamed: 0        50418                     49.97
-2025-09-15 19:23:15,054 - Transform - DEBUG - 🗑️ Menghapus data null < 1% dari df_sales
-2025-09-15 19:23:15,093 - Transform - DEBUG - 🗑️ Menghapus kolom 'Unnamed: 0'
-2025-09-15 19:23:15,099 - Transform - DEBUG - 🔄 Transform kolom discount_price, actual_price, no_of_ratings, ratings
-2025-09-15 19:23:15,162 - Transform - DEBUG - 🔍 Cek kembali data null setelah transform
-2025-09-15 19:23:15,173 - Transform - INFO - Empty DataFrame
+2025-09-23 18:14:51,917 - Transform - DEBUG - 🗑️ Menghapus data null < 1% dari df_sales
+2025-09-23 18:14:51,971 - Transform - DEBUG - 🗑️ Menghapus kolom 'Unnamed: 0'
+2025-09-23 18:14:51,980 - Transform - DEBUG - 🔄 Transform kolom discount_price, actual_price, no_of_ratings, ratings
+2025-09-23 18:14:52,063 - Transform - DEBUG - 🔍 Cek kembali data null setelah transform
+2025-09-23 18:14:52,085 - Transform - INFO - Empty DataFrame
 Columns: [col, missing_val, missing_value_percentage]
 Index: []
-2025-09-15 19:23:15,366 - Transform - INFO - ✅ Data Sales berhasil ditransformasi & disimpan
-2025-09-15 19:47:56,695 - Transform - DEBUG - 📂 Membaca data Sales ke DataFrame
-2025-09-15 19:47:57,244 - Transform - INFO - ✅ File Sales CSV berhasil dibaca
-2025-09-15 19:47:57,244 - Transform - DEBUG - 🔍 Mengecek nilai null pada df_sales
-2025-09-15 19:47:57,274 - Transform - INFO -               col  missing_val  missing_value_percentage
-5         ratings        32227                     31.94
-6   no_of_ratings        32227                     31.94
-7  discount_price        11166                     11.07
-8    actual_price         3221                      3.19
-9      Unnamed: 0        50418                     49.97
-2025-09-15 19:47:57,283 - Transform - DEBUG - 🗑️ Menghapus data null < 1% dari df_sales
-2025-09-15 19:47:57,316 - Transform - DEBUG - 🗑️ Menghapus kolom 'Unnamed: 0'
-2025-09-15 19:47:57,323 - Transform - DEBUG - 🔄 Transform kolom discount_price, actual_price, no_of_ratings, ratings
-2025-09-15 19:47:57,385 - Transform - DEBUG - 🔍 Cek kembali data null setelah transform
-2025-09-15 19:47:57,397 - Transform - INFO - Empty DataFrame
-Columns: [col, missing_val, missing_value_percentage]
-Index: []
-2025-09-15 19:47:57,619 - Transform - INFO - ✅ Data Sales berhasil ditransformasi & disimpan
-2025-09-15 19:50:59,869 - Transform - DEBUG - 📂 Membaca data Books ke DataFrame
-2025-09-15 19:50:59,875 - Transform - INFO - ✅ File Books CSV berhasil dibaca
-2025-09-15 19:50:59,875 - Transform - DEBUG - 🔍 Mengecek data duplicate & null
-2025-09-15 19:50:59,877 - Transform - INFO - total data duplicate 0
-2025-09-15 19:50:59,879 - Transform - INFO - Empty DataFrame
-Columns: [col, missing_val, missing_value_percentage]
-Index: []
-2025-09-15 19:50:59,880 - Transform - DEBUG - 🔄 Transform kolom price ke float
-2025-09-15 19:50:59,882 - Transform - INFO - ✅ Kolom price berhasil ditransformasi
-2025-09-15 19:50:59,882 - Transform - DEBUG - 🔄 Transform kolom rating ke int
-2025-09-15 19:50:59,883 - Transform - INFO - ✅ Kolom rating berhasil ditransformasi
-2025-09-15 19:50:59,889 - Transform - INFO - ✅ Data Books berhasil ditransformasi & disimpan
-2025-09-15 19:51:13,248 - Transform - DEBUG - 📂 Membaca data Marketing ke DataFrame
-2025-09-15 19:51:13,659 - Transform - INFO - ✅ File Marketing CSV berhasil dibaca
-2025-09-15 19:51:13,659 - Transform - DEBUG - 🔍 Validasi data Marketing (null & duplicate)
-2025-09-15 19:51:13,668 - Transform - INFO -                 col  missing_val  missing_value_percentage
-9   prices.shipping         2972                     41.00
-16              ean         5706                     78.71
-19     manufacturer         4014                     55.37
-26      Unnamed: 26         7210                     99.46
-27      Unnamed: 27         7231                     99.75
-28      Unnamed: 28         7243                     99.92
-29      Unnamed: 29         7237                     99.83
-30      Unnamed: 30         7243                     99.92
-2025-09-15 19:51:13,771 - Transform - INFO - total data duplicate 0
-2025-09-15 19:51:13,771 - Transform - DEBUG - 📊 Mendapatkan kolom dengan null > 60%
-2025-09-15 19:51:13,774 - Transform - INFO - 🗑️ Kolom ['ean', 'Unnamed: 26', 'Unnamed: 27', 'Unnamed: 28', 'Unnamed: 29', 'Unnamed: 30'] berhasil dihapus
-2025-09-15 19:51:13,774 - Transform - DEBUG - 🛠️ Transform kolom prices.shipping
-2025-09-15 19:51:13,826 - Transform - INFO - ✅ prices.shipping berhasil ditransformasi
-2025-09-15 19:51:13,826 - Transform - DEBUG - 🛠️ Isi kolom manufacturer
-2025-09-15 19:51:13,867 - Transform - INFO - ✅ manufacturer berhasil ditransformasi
-2025-09-15 19:51:13,868 - Transform - DEBUG - 🛠️ Buat kolom shipping_cost (float)
-2025-09-15 19:51:13,869 - Transform - INFO - ✅ shipping_cost berhasil dibuat
-2025-09-15 19:51:13,869 - Transform - DEBUG - 🗓️ Konversi kolom dateAdded & dateUpdated ke datetime
-2025-09-15 19:51:13,882 - Transform - INFO - ✅ dateAdded & dateUpdated berhasil dikonversi
-2025-09-15 19:51:13,882 - Transform - DEBUG - 🧹 Menghapus sisa data null
-2025-09-15 19:51:13,889 - Transform - DEBUG - 🏷️ Rename kolom Marketing
-2025-09-15 19:51:13,894 - Transform - INFO - ✅ Kolom Marketing berhasil di-rename
-2025-09-15 19:51:13,972 - Transform - INFO - total data duplicate 0
-2025-09-15 19:51:13,978 - Transform - INFO - Empty DataFrame
-Columns: [col, missing_val, missing_value_percentage]
-Index: []
-2025-09-15 19:51:14,921 - Transform - INFO - ✅ Data Marketing berhasil ditransformasi & disimpan
+2025-09-23 18:14:52,466 - Transform - INFO - ✅ Data Sales berhasil ditransformasi & disimpan

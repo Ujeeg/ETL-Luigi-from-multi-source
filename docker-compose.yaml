@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   amazon_db:
     image: shandytp/amazon-sales-data-docker-db:latest
