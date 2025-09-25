@@ -18,7 +18,7 @@ class TransformDataSales(luigi.Task):
 
     def run(self):
         input_files = self.input()
-
+        
         logger.debug("📂 Membaca data Sales ke DataFrame")
         try:
             df_sales = pd.read_csv(input_files['sales'].path)
@@ -136,6 +136,13 @@ class TransformDataMarketng(luigi.Task):
         except Exception as e:
             logger.error(f'❌ Error konversi date: {e}')
 
+        try:
+            df_dropped_null["prices.dateSeen"] = (df_dropped_null["prices.dateSeen"].str.replace("T", " ", regex=False).str.replace("Z", "", regex=False))
+            logger.info('✅ prices.dateSeen berhasil dibersihkan')
+        except Exception as e:
+            logger.error(f'❌ Error cleaning date: {e}')
+
+
         logger.debug("🧹 Menghapus sisa data null")
         try:
             df_marketing_clean = transform_class.drop_null_data(df_dropped_null)
@@ -169,11 +176,28 @@ class TransformDataMarketng(luigi.Task):
         logger.info(transform_class.check_duplicated(df_marketing_clean))
         logger.info(transform_class.check_null(df_marketing_clean))
 
+        ######
+        logger.debug("🗓️ Konversi kolom prices_availability ")
+        try:
+            df_marketing_clean['prices_availability'] = df_marketing_clean['prices_availability'].apply(transform_class.change_availability)
+        except Exception as e:
+            logger.error(f'❌ Error solve inkosistensi kolom prices_availability: {e}')
+        
+        logger.debug("🗓️ Konversi kolom prices_condition")
+        try:
+            df_marketing_clean['prices_condition'] = df_marketing_clean['prices_condition'].apply(transform_class.change_condition)
+        except Exception as e:
+            logger.error(f'❌ Error solve inkosistensi kolom prices_condition: {e}')
+        ######
+        
         try:
             df_marketing_clean.to_csv(self.output()['marketing'].path, index=False)
             logger.info("✅ Data Marketing berhasil ditransformasi & disimpan")
         except Exception as e:
             logger.error(f"❌ Error simpan Marketing: {e}")
+
+        print(df_marketing_clean.info())
+        print(df_marketing_clean.head())
 
     def output(self):
         return {'marketing': luigi.LocalTarget("data/transform/transform_marketing.csv")}

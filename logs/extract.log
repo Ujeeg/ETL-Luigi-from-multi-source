@@ -1,14 +1,12 @@
-2025-09-23 18:13:40,819 - Extract - DEBUG - ▶ Starting extraction for Sales data
-2025-09-23 18:13:40,827 - Extract - DEBUG - ▶ Starting extraction for Marketing data
-2025-09-23 18:13:40,836 - Extract - DEBUG - ▶ Starting extraction for Books data
-2025-09-23 18:13:40,858 - Extract - INFO - ✅ Books data successfully extracted
-2025-09-23 18:13:40,859 - Extract - DEBUG - 💾 Saving Books data to CSV
-2025-09-23 18:13:40,870 - Extract - INFO - ✅ Books data successfully saved to CSV
-2025-09-23 18:13:40,891 - Extract - ERROR - ❌ Unexpected error while extracting Sales data: No module named 'psycopg2'
-2025-09-23 18:13:41,727 - Extract - INFO - ✅ Marketing data successfully extracted
-2025-09-23 18:13:41,728 - Extract - DEBUG - 💾 Saving Marketing data to CSV
-2025-09-23 18:13:43,598 - Extract - INFO - ✅ Marketing data successfully saved to CSV
-2025-09-23 18:14:48,936 - Extract - DEBUG - ▶ Starting extraction for Sales data
-2025-09-23 18:14:49,802 - Extract - INFO - ✅ Sales data successfully extracted
-2025-09-23 18:14:49,802 - Extract - DEBUG - 💾 Saving Sales data to CSV
-2025-09-23 18:14:51,036 - Extract - INFO - ✅ Sales data successfully saved to CSV
+2025-09-25 13:19:01,610 - Extract - DEBUG - ▶ Starting extraction for Sales data
+2025-09-25 13:19:01,614 - Extract - DEBUG - ▶ Starting extraction for Marketing data
+2025-09-25 13:19:01,619 - Extract - DEBUG - ▶ Starting extraction for Books data
+2025-09-25 13:19:01,628 - Extract - INFO - ✅ Books data successfully extracted
+2025-09-25 13:19:01,628 - Extract - DEBUG - 💾 Saving Books data to CSV
+2025-09-25 13:19:01,634 - Extract - INFO - ✅ Books data successfully saved to CSV
+2025-09-25 13:19:02,027 - Extract - INFO - ✅ Sales data successfully extracted
+2025-09-25 13:19:02,027 - Extract - DEBUG - 💾 Saving Sales data to CSV
+2025-09-25 13:19:02,042 - Extract - INFO - ✅ Marketing data successfully extracted
+2025-09-25 13:19:02,042 - Extract - DEBUG - 💾 Saving Marketing data to CSV
+2025-09-25 13:19:02,592 - Extract - INFO - ✅ Sales data successfully saved to CSV
+2025-09-25 13:19:02,954 - Extract - INFO - ✅ Marketing data successfully saved to CSV

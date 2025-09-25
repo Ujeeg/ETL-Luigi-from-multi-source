@@ -24,7 +24,7 @@ services:
       - "5433:5432"  
     volumes:
       - etl_db_data:/var/lib/postgresql/data  
-      - ./init-scripts:/docker-entrypoint-initdb.d  
+      - ./init-scripts:/docker-entrypoint-initdb.d:Z  # should use ':Z' cause im using linux fedora, if using windows just remove ':Z'
 
 volumes:
   amazon_db_data:

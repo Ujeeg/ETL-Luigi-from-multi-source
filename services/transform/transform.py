@@ -96,3 +96,33 @@ class Transform:
             return 4
         elif col == 'Five':
             return 5
+        
+    def change_availability(self,data):
+        instock = ["in stock",'yes', 'true']
+        outstock  = ["out of stock","no","sold","retired"]
+        preorder = ["special order","more on the way"]
+
+        data = str(data).lower()
+        if data in instock:
+            return 'In Stock'
+        elif data in outstock:
+            return 'Out of Stock'
+        elif data in preorder:
+            return 'PreOrder'
+        else:
+            return 'Unknown'
+
+    def change_condition(self,data):
+        new = ["new", "brand new", "condition: brand new!", "brand new!", "new other (see details)"]
+        used  = [ "used","pre-owned","preowned"]
+        refurbished = [ "manufacturer refurbished", "seller refurbished", "refurbished"]
+
+        data = str(data).lower()
+        if data in new:
+            return 'New'
+        elif data in used:
+            return 'Used'
+        elif data in refurbished:
+            return 'Refurbished'
+        else:
+            return 'Unknown'

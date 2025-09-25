@@ -1,10 +1,12 @@
 -- Membuat tabel untuk data_book
-CREATE TABLE data_book (
+CREATE TABLE data_books (
     title TEXT,
     price FLOAT,
-    link_product TEXT,  
+    link_product TEXT,
+    img_url TEXT, 
     rating INT,
     CONSTRAINT check_rating CHECK (rating >= 0 AND rating <= 5)  
+);
 
 -- Membuat tabel untuk data_sales
 CREATE TABLE data_sales (
@@ -18,6 +20,4 @@ CREATE TABLE data_sales (
     discount_price FLOAT,
     actual_price FLOAT
 );
-
-
 

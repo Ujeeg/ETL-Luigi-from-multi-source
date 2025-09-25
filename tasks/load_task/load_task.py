@@ -4,6 +4,9 @@ import luigi
 import pandas as pd
 import os
 from utils.logger import logger_load
+from sqlalchemy.types import VARCHAR, FLOAT, TEXT, BOOLEAN, TIMESTAMP
+
+
 
 load_class = Load()
 
@@ -60,7 +63,43 @@ class LoadDataMarketing(luigi.Task):
                 username, password, host, port, database
             )
 
-            load_class.load_data_to_db(df_marketing, "data_marketing", conn)
+            # 🗂️ Mapping kolom -> tipe data SQLAlchemy
+            
+            dtype_map = {
+                "id": VARCHAR(255),
+                "prices_amount_max": FLOAT,
+                "prices_amount_min": FLOAT,
+                "prices_availability": TEXT,
+                "prices_condition": TEXT,
+                "prices_currency": VARCHAR(10),
+                "prices_date_seen": TEXT,
+                "prices_is_sale": BOOLEAN,
+                "prices_merchant": TEXT,
+                "prices_shipping": TEXT,
+                "prices_source_urls": TEXT,
+                "asins": VARCHAR(255),
+                "brand": TEXT,
+                "categories": TEXT,
+                "dateAdded": TIMESTAMP,
+                "dateUpdated": TIMESTAMP,
+                "image_urls": TEXT,
+                "keys": TEXT,
+                "manufacturer": TEXT,
+                "manufacturer_number": TEXT,
+                "name": TEXT,
+                "primary_categories": TEXT,
+                "source_urls": TEXT,
+                "upc": VARCHAR(255),
+                "weight": TEXT,
+                "shipping_cost": FLOAT,
+            }
+
+            load_class.load_data_to_db(
+                df_marketing,
+                "data_marketing",
+                conn,
+                dtype_map=dtype_map
+            )
             logger.info("✅ Selesai load data Marketing")
         except Exception as e:
             logger.error(f"❌ Gagal load data Marketing: {e}", exc_info=True)
