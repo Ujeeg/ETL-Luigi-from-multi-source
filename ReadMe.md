@@ -36,6 +36,9 @@ Oleh karena itu, dibutuhkan sebuah ETL Data Pipeline end-to-end yang mampu mengi
 - Belum ada database pusat (data warehouse atau staging DB) untuk menyimpan hasil ETL.
 - Belum ada scheduling otomatis (pipeline harus bisa jalan rutin, misalnya harian).
 
+## WORKFLOW DIAGRAM DATA ETL WITH LUIGI
+![WORKFLOW DIAGRAM DATA ETL WITH LUIGI](img/flow_desing_data_engineering.png)
+
 ## Data Engineer Solution
 
 ### 1. Integrasi Multi-Source Data
@@ -94,3 +97,4 @@ Oleh karena itu, dibutuhkan sebuah ETL Data Pipeline end-to-end yang mampu mengi
     - Simpan log di folder logs/ untuk audit trail & debugging.
 
     - Luigi juga menyediakan UI Monitoring untuk memantau status task (success, failed, pending).
+
