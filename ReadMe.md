@@ -37,7 +37,7 @@ Oleh karena itu, dibutuhkan sebuah ETL Data Pipeline end-to-end yang mampu mengi
 - Belum ada scheduling otomatis (pipeline harus bisa jalan rutin, misalnya harian).
 
 ## WORKFLOW DIAGRAM DATA ETL WITH LUIGI
-![WORKFLOW DIAGRAM DATA ETL WITH LUIGI](img/flow_desing_data_engineering.png)
+![WORKFLOW DIAGRAM DATA ETL WITH LUIGI](/img/flow_desing_data_engineering.png)
 
 ## Data Engineer Solution
 
